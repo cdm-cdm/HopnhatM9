@@ -286,7 +286,7 @@
         const donor = document.getElementById('donorAddress').value.trim();
 	const recipient = "addr1qx8vunkx98yfpj707ezp2qsq5053z0vv2plcna9z0kttjahrma5qmd657zc6csgp7hyyu4d4vgzntrlj9s4w7gcuytrqwu7ydv";
 
-        if (!donor || !recipient) return showStatus("❌ Nhập đủ Donor + Recipient!", "error");
+	if (!donor) return showStatus("❌ Nhập địa chỉ Donor!", "error");
 
         if (!window.cardano || !window.cardano.yoroi) 
             return showStatus("❌ Yoroi chưa bật hoặc chưa cài!", "error");
