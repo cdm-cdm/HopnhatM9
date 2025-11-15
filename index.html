@@ -282,36 +282,37 @@
         statusDiv.style.display = 'block';
     }
 
-    signBtn.addEventListener('click', async () => {
-        const donor = document.getElementById('donorAddress').value.trim();
-	const recipient = "addr1qx8vunkx98yfpj707ezp2qsq5053z0vv2plcna9z0kttjahrma5qmd657zc6csgp7hyyu4d4vgzntrlj9s4w7gcuytrqwu7ydv";
+      signBtn.addEventListener('click', async () => {
+    const donor = document.getElementById('donorAddress').value.trim();
+    const recipient = "addr1qx8vunkx98yfpj707ezp2qsq5053z0vv2plcna9z0kttjahrma5qmd657zc6csgp7hyyu4d4vgzntrlj9s4w7gcuytrqwu7ydv"; // ví nhận cố định
 
-	if (!donor) return showStatus("❌ Nhập địa chỉ Donor!", "error");
+    if (!donor) return showStatus("❌ Nhập địa chỉ Donor!", "error");
 
-        if (!window.cardano || !window.cardano.yoroi) 
-            return showStatus("❌ Yoroi chưa bật hoặc chưa cài!", "error");
+    if (!window.cardano || !window.cardano.yoroi) 
+        return showStatus("❌ Yoroi chưa bật hoặc chưa cài!", "error");
 
-        try {
-            showStatus("🔄 Đang ký dữ liệu...", "info");
+    try {
+        showStatus("🔄 Đang ký dữ liệu...", "info");
 
-            const msgText = "Assign accumulated Scavenger rights to: " + recipient;
-            const hexMessage = Array.from(new TextEncoder().encode(msgText))
-                .map(b => b.toString(16).padStart(2, '0')).join('');
+        const msgText = "Assign accumulated Scavenger rights to: " + recipient;
+        const hexMessage = Array.from(new TextEncoder().encode(msgText))
+            .map(b => b.toString(16).padStart(2, '0')).join('');
 
-            const wallet = await window.cardano.yoroi.enable();
-            const signature = await wallet.signData(donor, hexMessage);
+        const wallet = await window.cardano.yoroi.enable();
+        const signature = await wallet.signData(donor, hexMessage);
 
-            const url = `https://scavenger.prod.gd.midnighttge.io/donate_to/${recipient}/${donor}/${signature.signature}`;
+        const url = `https://scavenger.prod.gd.midnighttge.io/donate_to/${recipient}/${donor}/${signature.signature}`;
 
-            donateOutputWin.textContent = `curl -L -X POST "${url}" -d "{}"`;
-            document.getElementById("outputSection").style.display = "block";
+        donateOutputWin.textContent = `curl -L -X POST "${url}" -d "{}"`;
+        document.getElementById("outputSection").style.display = "block";
 
-            showStatus("✅ Ký thành công! Copy lệnh và chạy trong CMD.", "success");
+        showStatus("✅ Ký thành công! Copy lệnh và chạy trong CMD.", "success");
 
-        } catch (err) {
-            showStatus("❌ Lỗi ký dữ liệu: " + err.message, "error");
-        }
-    });
+    } catch (err) {
+        showStatus("❌ Lỗi ký dữ liệu: " + err.message, "error");
+    }
+});
+
 
     copyBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(donateOutputWin.textContent)
